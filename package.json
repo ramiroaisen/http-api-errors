@@ -1,0 +1,37 @@
+{
+  "name": "http-api-errors",
+  "version": "0.0.1",
+  "description": "Strongly typed, resusable errors for usage in http apis\"",
+  "main": "./dist/lib.js",
+  "types": "./dist/lib.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc -w",
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramiroaisen/http-api-errors.git"
+  },
+  "keywords": [
+    "errors",
+    "http",
+    "errors",
+    "api",
+    "typescript"
+  ],
+  "author": "Ramiro Aisen <ramiroaisen@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ramiroaisen/http-api-errors/issues"
+  },
+  "homepage": "https://github.com/ramiroaisen/http-api-errors#readme",
+  "dependencies": {
+    "http-status-codes": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "typedoc": "^0.22.15"
+  }
+}
