@@ -73,11 +73,23 @@ assert.equal(kIsDisplayable, Symbol.for("http-api-errors.error.isDisplayable"));
 // custom errors
 export class MyAwesomeError extends HttpError {
   
-  metadata: Something
+  // you can add any props you want with any names and types
+  metadata: Metadata;
 
-  constructor(message: string, metadata: Something) {
-    super(status: SomeStatus, message);
-    this. metadata = metadata;
+  constructor(status: number, message: string, metadata: Metadata) {
+    super(status, message);
+    this.metadata = metadata;
+  }
+
+
+  // If you wanna to expose extra data to the client of your api
+  // you should override the toJSON() method
+  toJSON() {
+    return {
+      status: this.status,
+      messsage: this.message,
+      metadata: this.metadata,
+    }
   }
 }
 

@@ -5,6 +5,7 @@ export const kIsDisplayable = Symbol.for("http-api-errors.error.isDisplayable");
 export const kToHttpError = Symbol.for("http-api-errors.error.toHttpError");
 
 export const toHttpError = (e: any): HttpError => {
+  if(e instanceof HttpError) return e;
   if(typeof e?.[kToHttpError] === "function") return e[kToHttpError]();
   const status = Number(e?.status) || 500;
   const message = e?.[kIsDisplayable] ? String(e?.message) : "Internal error";
@@ -14,12 +15,19 @@ export const toHttpError = (e: any): HttpError => {
 export class HttpError extends Error {
   
   status: number;
-  [kIsDisplayable]: true;
+  [kIsDisplayable]: boolean;
 
   constructor(status: number, message: string) {
     super(message);
     this.status = status;
     this[kIsDisplayable] = true;
+  }
+
+  toJSON() {
+    return {
+      status: this.status,
+      message: this[kIsDisplayable] ? this.message : String("Internal error"),
+    }
   }
 }
 
@@ -49,12 +57,7 @@ export const expressJsonCatchHandler = ({ logger }: { logger?: Logger } = {}) =>
     logger?.warn(`[HttpApiError]: error in handler at ${req.method} ${req.originalUrl} => ${error.status} ${oMessage}`)
 
     if(!res.headersSent) {
-      res.status(error.status).json({
-        error: {
-          status: error.status,
-          message: error.message,
-        }
-      })
+      res.status(error.status).json({ error })
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "http-api-errors",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Strongly typed, resusable errors for usage in http apis\"",
   "main": "./dist/lib.js",
   "types": "./dist/lib.d.ts",
